@@ -9,8 +9,7 @@ lazy val root = (project in file("."))
     name := "dag-runner",
     libraryDependencies ++= Seq(
       "org.json4s" %% "json4s-native" % "4.0.0",
-      "org.mockito" % "mockito-all" % "1.10.19" % Test,
-      "org.scalactic" %% "scalactic" % "3.2.9",
-      "org.scalatest" %% "scalatest" % "3.2.9" % Test
+      "org.scalactic" % "scalactic_native0.4_2.13" % "3.2.9",
+      "org.scalatest" % "scalatest_native0.4_2.13" % "3.2.9" % Test
     )
   )

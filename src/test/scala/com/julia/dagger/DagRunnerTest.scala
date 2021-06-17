@@ -2,7 +2,6 @@ package com.julia.dagger
 
 import org.json4s.native.JsonMethods.parse
 import org.json4s.{DefaultFormats, jvalue2extractable}
-import org.mockito.Mockito
 import org.scalatest.flatspec.AnyFlatSpecLike
 import org.scalatest.matchers.should.Matchers
 
@@ -34,7 +33,7 @@ object DagRunnerTest {
   val extractedMap: Map[String, DagRunner.Node] = parse(twoRootNodes).extract[Map[String, DagRunner.Node]]
 }
 
-class DagRunnerTest extends Mockito with Matchers with AnyFlatSpecLike {
+class DagRunnerTest extends Matchers with AnyFlatSpecLike {
 
   import DagRunner._
   import DagRunnerTest._
