@@ -53,7 +53,7 @@ object DagRunner {
 class DagRunner(val json: String) {
   var nodesAlreadyPrinted: Set[String] = Set.empty
 
-  def main: Unit = {
+  def main(): Unit = {
     val extractedMap: Map[String, Node] = extractMap(json)
     val rootNodes: immutable.Iterable[String] = findRootNodes(extractedMap)
     rootNodes.foreach { rootNode =>
