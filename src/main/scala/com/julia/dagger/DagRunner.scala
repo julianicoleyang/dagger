@@ -5,6 +5,7 @@ import org.json4s.native.JsonMethods.parse
 
 import scala.collection.immutable
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.duration.DurationInt
 import scala.concurrent.{Await, Future}
 import scala.io.Source
 import scala.util.{Failure, Success}
@@ -65,6 +66,8 @@ object DagRunner {
           case Failure(_) =>
         }
       }
+      // NOTE: Needs an await to keep vm alive until future ends
+      Await.ready(future, 10.seconds)
     }
   }
 

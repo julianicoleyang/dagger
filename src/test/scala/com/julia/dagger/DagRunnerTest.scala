@@ -38,8 +38,6 @@ class DagRunnerTest extends Matchers with AnyFlatSpecLike {
   import DagRunner._
   import DagRunnerTest._
 
-  implicit val jsonDefaultFormats: DefaultFormats.type = DefaultFormats
-
   behavior of "findRootNodes"
 
   it should "find all root nodes" in {
