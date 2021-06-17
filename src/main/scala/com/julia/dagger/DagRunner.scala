@@ -41,7 +41,7 @@ object DagRunner {
     * Determine if a specific node has children or not
     *
     * @param nodeId node ID of interest
-    * @param map input map to look through
+    * @param map    input map to look through
     * @return whether or not a node has a child
     */
   def hasChildNode(nodeId: String, map: Map[String, Node]): Boolean = {
@@ -51,8 +51,8 @@ object DagRunner {
   /**
     * Given a root node print all its children
     *
-   * @param rootNode ID of root node
-    * @param map input map
+    * @param rootNode ID of root node
+    * @param map      input map
     */
   def printChildNodes(rootNode: String, map: Map[String, Node]): Unit = {
     for ((nodeId, time) <- map(rootNode).edges) yield {
@@ -69,7 +69,7 @@ object DagRunner {
   /**
     * Set a future for child node
     *
-   * @param node node ID
+    * @param node node ID
     * @param time time after which to print child node
     */
   def futureChild(node: String, time: Int): Future[Unit] = {
