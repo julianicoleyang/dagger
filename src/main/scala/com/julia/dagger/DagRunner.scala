@@ -1,17 +1,19 @@
 package com.julia.dagger
 
-import com.julia.dagger.DagRunner.{Node, extractMap, findRootNodes, hasChildNode}
 import org.json4s.DefaultFormats
 import org.json4s.native.JsonMethods.parse
 
 import scala.collection.immutable
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{Await, Future}
+import scala.io.Source
 import scala.util.{Failure, Success}
 
 object DagRunner {
 
   implicit val jsonDefaultFormats: DefaultFormats.type = DefaultFormats
+
+  var nodesAlreadyPrinted: Set[String] = Set.empty
 
   case class Node(start: Option[Boolean], edges: Map[String, Int])
 
@@ -48,22 +50,6 @@ object DagRunner {
     map(nodeId).edges.nonEmpty
   }
 
-}
-
-class DagRunner(val json: String) {
-  var nodesAlreadyPrinted: Set[String] = Set.empty
-
-  def runGraph(): Unit = {
-    val extractedMap: Map[String, Node] = extractMap(json)
-    val rootNodes: immutable.Iterable[String] = findRootNodes(extractedMap)
-    rootNodes.foreach { rootNode =>
-      {
-        println(rootNode)
-        printChildNodes(rootNode, extractedMap)
-      }
-    }
-  }
-
   /**
     * Given a root node print all its children
     *
@@ -95,6 +81,20 @@ class DagRunner(val json: String) {
       if (!nodesAlreadyPrinted.contains(node)) {
         println(node)
         nodesAlreadyPrinted += node
+      }
+    }
+  }
+
+  def main(args: Array[String]): Unit = {
+    if (args.length == 1) {
+      val jsonFileContents: String = Source.fromFile(args.head).getLines.mkString
+      val extractedMap: Map[String, Node] = extractMap(jsonFileContents)
+      val rootNodes: immutable.Iterable[String] = findRootNodes(extractedMap)
+      rootNodes.foreach { rootNode =>
+        {
+          println(rootNode)
+          printChildNodes(rootNode, extractedMap)
+        }
       }
     }
   }
