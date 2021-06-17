@@ -1,8 +1,9 @@
 ThisBuild / organization := "com.julia"
-ThisBuild / scalaVersion := "2.13.6"
-ThisBuild / version := "0.1.0-SNAPSHOT"
+ThisBuild / scalaVersion := "2.13.5"
+ThisBuild / version := "0.2.0-SNAPSHOT"
+ThisBuild / organizationName := "julia"
 
-mainClass in Compile := Some("com.julia.dagger.DagRunner")
+mainClass in Compile := Some("com.julia.dagger")
 
 lazy val root = (project in file("."))
   .settings(
