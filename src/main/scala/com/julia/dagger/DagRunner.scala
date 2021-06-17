@@ -1,6 +1,6 @@
 package com.julia.dagger
 
-import com.julia.dagger.DagRunner.{Node, extractMap, findRootNodes, printChildNodes}
+import com.julia.dagger.DagRunner.{Node, extractMap, findRootNodes, hasChildNode}
 import org.json4s.DefaultFormats
 import org.json4s.native.JsonMethods.parse
 
@@ -48,10 +48,26 @@ object DagRunner {
     map(nodeId).edges.nonEmpty
   }
 
+}
+
+class DagRunner(val json: String) {
+  var nodesAlreadyPrinted: Set[String] = Set.empty
+
+  def main: Unit = {
+    val extractedMap: Map[String, Node] = extractMap(json)
+    val rootNodes: immutable.Iterable[String] = findRootNodes(extractedMap)
+    rootNodes.foreach { rootNode =>
+      {
+        println(rootNode)
+        printChildNodes(rootNode, extractedMap)
+      }
+    }
+  }
+
   /**
     * Given a root node print all its children
     *
-    * @param rootNode ID of root node
+   * @param rootNode ID of root node
     * @param map      input map
     */
   def printChildNodes(rootNode: String, map: Map[String, Node]): Unit = {
@@ -69,26 +85,16 @@ object DagRunner {
   /**
     * Set a future for child node
     *
-    * @param node node ID
+   * @param node node ID
     * @param time time after which to print child node
     */
   def futureChild(node: String, time: Int): Future[Unit] = {
     Future {
       Thread.sleep(time * 1000) // convert to ms
-      println(node)
-    }
-  }
-
-}
-
-class DagRunner(val json: String) {
-  def main = {
-    val extractedMap: Map[String, Node] = extractMap(json)
-    val rootNodes: immutable.Iterable[String] = findRootNodes(extractedMap)
-    rootNodes.foreach { rootNode =>
-      {
-        println(rootNode)
-        printChildNodes(rootNode, extractedMap)
+      // do not print nodes that have already been printed
+      if (!nodesAlreadyPrinted.contains(node)) {
+        println(node)
+        nodesAlreadyPrinted += node
       }
     }
   }

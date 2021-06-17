@@ -25,7 +25,9 @@ object DagRunnerTest {
       | "B": {"edges": {"D": 1}},
       | "C": {"edges": {}},
       | "D": {"edges": {}},
-      | "E": {"start": true, "edges": {}}
+      | "E": {"start": true, "edges": {"B": 6, "F": 1, "G": 9}},
+      | "F": {"edges": {}},
+      | "G": {"edges": {}}
       |}
       |""".stripMargin
 
@@ -59,12 +61,5 @@ class DagRunnerTest extends Mockito with Matchers with AnyFlatSpecLike {
 
   it should "return false if node has children" in {
     hasChildNode("C", extractedMap) shouldEqual false
-  }
-
-  behavior of "main"
-
-  it should "do something" in {
-    val dagRunner = new DagRunner(twoRootNodes)
-    dagRunner.main
   }
 }
