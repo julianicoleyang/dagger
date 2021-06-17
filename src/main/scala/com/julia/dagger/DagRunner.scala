@@ -67,7 +67,7 @@ class DagRunner(val json: String) {
   /**
     * Given a root node print all its children
     *
-   * @param rootNode ID of root node
+    * @param rootNode ID of root node
     * @param map      input map
     */
   def printChildNodes(rootNode: String, map: Map[String, Node]): Unit = {
@@ -85,7 +85,7 @@ class DagRunner(val json: String) {
   /**
     * Set a future for child node
     *
-   * @param node node ID
+    * @param node node ID
     * @param time time after which to print child node
     */
   def futureChild(node: String, time: Int): Future[Unit] = {
